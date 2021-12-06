@@ -14,17 +14,16 @@ namespace HangManGame
             while (playAgain)
             {
                 List<string> levelOneWords = new List<string>(); //List of words for level one difficulty              
-
-                levelOneWords.Add("agent");
-                levelOneWords.Add("blood");
+                levelOneWords.Add("doritos");
+                levelOneWords.Add("bloody");
                 levelOneWords.Add("chair");
                 levelOneWords.Add("death");
-                levelOneWords.Add("enemy");
+                levelOneWords.Add("enemies");
                 levelOneWords.Add("gross");
                 levelOneWords.Add("laser");
                 levelOneWords.Add("queen");
-                levelOneWords.Add("smoke");
-                levelOneWords.Add("wheel");
+                levelOneWords.Add("spider");
+                levelOneWords.Add("wheelie");
 
                 Random rndLvlOne = new Random();
                 string lvlOneWord = levelOneWords[rndLvlOne.Next(levelOneWords.Count)]; //Randomly selected word from level one list
@@ -32,28 +31,41 @@ namespace HangManGame
                 int lvlOneAllowedAttempts = 9;
                 int lvlOneWrongAttempts = 0;
                 int lvlOneRemAttempts = 0;
-                int lvlOneRemLetters = 5;
-                char[] lvlOneDsply = {'_','_','_','_','_'};
+                int lvlOneRemLetters = lvlOneWord.Length;
+                string lvlOneBlank = "";
 
-                Console.WriteLine(lvlOneDsply.ToString());
-
+                List<string> lvlOneDsply = new List<string>(); //hangman blank spaces
+                lvlOneDsply.Add("_");
+                for (int i = 0; i < lvlOneWord.Length; i++)
+                {
+                    lvlOneDsply.Add("_");
+                    lvlOneBlank = lvlOneBlank + lvlOneDsply[i];
+                }
+                
                 Console.WriteLine("Welcome to Hang Man! \n\nLevel One Difficulty \n");
 
-                while (lvlOneWord != lvlOneDsply.ToString() && lvlOneWrongAttempts <= lvlOneAllowedAttempts)  //DANGER: .ToString doesn't do what you might think!
+                while (lvlOneWord != lvlOneBlank && lvlOneWrongAttempts <= lvlOneAllowedAttempts)  
                 {
                     Console.WriteLine(lvlOneWord);//for test purposes
 
                     lvlOneRemAttempts = lvlOneAllowedAttempts - lvlOneWrongAttempts;                  
-                    Console.WriteLine(lvlOneDsply);
-                    Console.WriteLine("\nPlease guess a letter\n");
-                    string input = Console.ReadLine();
                     
-                    if (lvlOneWord.Contains(input))
-                    {
-                        lvlOneRemLetters--;
-                        int letterIndex = lvlOneWord.IndexOf(input);
-                        lvlOneDsply[letterIndex] = input.ToCharArray()[letterIndex]; //Error: selects only first letter all others char[5] can only select one letter if there are two of same 
-                        Console.WriteLine($"Congrats! only {lvlOneRemLetters} left!");
+                    Console.WriteLine(lvlOneBlank);
+                    Console.WriteLine("\nPlease guess a letter\n");
+                    
+                    string lOneInput = Console.ReadLine().ToLower();
+                    char cLOneInput = char.Parse(lOneInput);
+                    
+                    for (int i = 0;i < lvlOneWord.Length;i++) //(Not Working) checks each letter of lvlOneWord for input and changing the corresponding _ of lvlOneBlank 
+                    {                       
+                        if (lvlOneWord[i] == cLOneInput)
+                        {
+                            lvlOneDsply[i] = lOneInput;                           
+                        }
+                    }
+                    if (lvlOneWord.Contains(lOneInput))
+                    {                       
+                        Console.WriteLine($"Nice Guess!!");
                     }
                     else
                     {
@@ -63,7 +75,7 @@ namespace HangManGame
 
                 }
 
-                if (lvlOneWord == lvlOneDsply.ToString()) //DANGER: .ToString doesn't do what you might think!
+                if (lvlOneWord == lvlOneBlank) 
                 {
                     Console.WriteLine("Congratulations! YOU WIN!");
                 }
