@@ -13,6 +13,15 @@ namespace HangManGame
 
             while (playAgain)
             {
+                //LevelOne 
+                
+                Random rndLvlOne = new Random();
+
+                string lvlOneWord;
+                string lOneInput;
+
+                bool beatLvlOne = false;
+
                 List<string> levelOneWords = new List<string>(); //List of words for level one difficulty              
                 levelOneWords.Add("doritos");
                 levelOneWords.Add("bloody");
@@ -24,60 +33,69 @@ namespace HangManGame
                 levelOneWords.Add("queen");
                 levelOneWords.Add("spider");
                 levelOneWords.Add("wheelie");
+               
+                lvlOneWord = levelOneWords[rndLvlOne.Next(levelOneWords.Count)]; //Randomly selected word from level one list
 
-                Random rndLvlOne = new Random();
-                string lvlOneWord = levelOneWords[rndLvlOne.Next(levelOneWords.Count)]; //Randomly selected word from level one list
-
-                int lvlOneAllowedAttempts = 9;
+                int lvlOneAllowedAttempts = 10;
                 int lvlOneWrongAttempts = 0;
                 int lvlOneRemAttempts = 0;
-                int lvlOneRemLetters = lvlOneWord.Length;
+                int lvlOneRemLetters = 0;
                 string lvlOneBlank = "";
 
-                List<string> lvlOneDsply = new List<string>(); //hangman blank spaces
-                lvlOneDsply.Add("_");
+                                
+
+                List<string> lvlOneDsply = new List<string>(lvlOneWord.Length); //hangman blank spaces                
                 for (int i = 0; i < lvlOneWord.Length; i++)
                 {
-                    lvlOneDsply.Add("_");
-                    lvlOneBlank = lvlOneBlank + lvlOneDsply[i];
-                }
-                
-                Console.WriteLine("Welcome to Hang Man! \n\nLevel One Difficulty \n");
+                    lvlOneDsply.Add("_"); 
+                }                              
 
-                while (lvlOneWord != lvlOneBlank && lvlOneWrongAttempts <= lvlOneAllowedAttempts)  
+                while (beatLvlOne == false && lvlOneWrongAttempts <= lvlOneAllowedAttempts)  
                 {
-                    Console.WriteLine(lvlOneWord);//for test purposes
+                    
+                    lvlOneRemAttempts = lvlOneAllowedAttempts - lvlOneWrongAttempts;
 
-                    lvlOneRemAttempts = lvlOneAllowedAttempts - lvlOneWrongAttempts;                  
-                    
-                    Console.WriteLine(lvlOneBlank);
-                    Console.WriteLine("\nPlease guess a letter\n");
-                    
-                    string lOneInput = Console.ReadLine().ToLower();
-                    char cLOneInput = char.Parse(lOneInput);
-                    
-                    for (int i = 0;i < lvlOneWord.Length;i++) //(Not Working) checks each letter of lvlOneWord for input and changing the corresponding _ of lvlOneBlank 
-                    {                       
-                        if (lvlOneWord[i] == cLOneInput)
-                        {
-                            lvlOneDsply[i] = lOneInput;                           
-                        }
+                    Console.WriteLine("  Welcome to Hang Man! \n\n**Level One Difficulty** \n");
+                    Console.WriteLine($"Please choose a letter, you have {lvlOneRemAttempts} guesses.\n");
+                    //Console.WriteLine(lvlOneWord);//for test purposes                                                                                                                                     
+                    foreach (string letter in lvlOneDsply)//writes letters in display
+                    {
+                        Console.Write(letter);
                     }
-                    if (lvlOneWord.Contains(lOneInput))
-                    {                       
-                        Console.WriteLine($"Nice Guess!!");
+                    Console.WriteLine();
+
+                    lOneInput = Console.ReadLine().ToLower();//gets user input
+                    
+                    if (lvlOneWord.Contains(lOneInput) == true)//checks if letter is in random word
+                    {
+                        Console.WriteLine($"Correct!!");
+                        
+                        char chlOneInput = lOneInput[0];
+
+                        for (int i = 0; i < lvlOneWord.Length; i++)//changes _ to input char, if there are no more _ the game is won
+                        {
+                            if (lvlOneWord[i].Equals(chlOneInput) == true)
+                            {
+                                lvlOneDsply[i] = lOneInput;
+                            }
+
+                            if (lvlOneDsply.Contains("_") == false)
+                            {
+                                beatLvlOne = true; 
+                            }
+                        }                       
                     }
                     else
                     {
-                        lvlOneWrongAttempts++;
-                        Console.WriteLine($"The word does not contain that letter, you have {lvlOneRemAttempts} chances left.");
+                        lvlOneWrongAttempts++;                       
+                        Console.WriteLine($"Incorrect!");
                     }
-
+                    Console.Clear();
                 }
 
-                if (lvlOneWord == lvlOneBlank) 
+                if (beatLvlOne == true) 
                 {
-                    Console.WriteLine("Congratulations! YOU WIN!");
+                    Console.WriteLine("Congratulations! you beat level one!");
                 }
                 else
                 {
@@ -87,7 +105,7 @@ namespace HangManGame
 
                 Console.WriteLine("Would you like to play again y/n?");
                 string userAnswer = Console.ReadLine();
-             
+                Console.Clear();
                 playAgain = userAnswer == yesString; 
             }
         }
