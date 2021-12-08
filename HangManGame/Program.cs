@@ -67,8 +67,7 @@ namespace HangManGame
                     lOneInput = Console.ReadLine().ToLower();//gets user input
                     
                     if (lvlOneWord.Contains(lOneInput))//checks if letter is in random word
-                    {
-                        Console.WriteLine($"Correct!!");
+                    {                       
                         
                         char chlOneInput = lOneInput[0];
 
@@ -78,18 +77,20 @@ namespace HangManGame
                             {
                                 lvlOneDsply[i] = lOneInput;
                             }                           
-                        }                       
+                        }
+                        Console.WriteLine($"Correct!!");
                     }
                     if (lvlOneDsply.Contains("_") == false)
                     {
                         beatLvlOne = true;
                     }
-                    else
+                    if (lvlOneWord.Contains(lOneInput) == false)
                     {
                         lvlOneWrongAttempts++;                       
                         Console.WriteLine($"Incorrect!");
                     }
-                    
+                    Console.WriteLine("Please press 'Spacebar' to try again.");
+                    bool spacebar = Console.ReadKey().Key == ConsoleKey.Spacebar;
                     Console.Clear();
                 }
 
