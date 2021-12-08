@@ -66,7 +66,7 @@ namespace HangManGame
 
                     lOneInput = Console.ReadLine().ToLower();//gets user input
                     
-                    if (lvlOneWord.Contains(lOneInput) == true)//checks if letter is in random word
+                    if (lvlOneWord.Contains(lOneInput))//checks if letter is in random word
                     {
                         Console.WriteLine($"Correct!!");
                         
@@ -74,26 +74,26 @@ namespace HangManGame
 
                         for (int i = 0; i < lvlOneWord.Length; i++)//changes _ to input char, if there are no more _ the game is won
                         {
-                            if (lvlOneWord[i].Equals(chlOneInput) == true)
+                            if (lvlOneWord[i].Equals(chlOneInput))
                             {
                                 lvlOneDsply[i] = lOneInput;
-                            }
-
-                            if (lvlOneDsply.Contains("_") == false)
-                            {
-                                beatLvlOne = true; 
-                            }
+                            }                           
                         }                       
+                    }
+                    if (lvlOneDsply.Contains("_") == false)
+                    {
+                        beatLvlOne = true;
                     }
                     else
                     {
                         lvlOneWrongAttempts++;                       
                         Console.WriteLine($"Incorrect!");
                     }
+                    
                     Console.Clear();
                 }
 
-                if (beatLvlOne == true) 
+                if (beatLvlOne) 
                 {
                     Console.WriteLine("Congratulations! you beat level one!");
                 }
