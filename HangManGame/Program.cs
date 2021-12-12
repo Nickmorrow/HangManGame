@@ -19,19 +19,19 @@ namespace HangManGame
             {
                 bool beatLvlThree = false;
                 bool playLvlThreeAgain = false;
-                string lThreeYesString = "y";
+
 
                 //LevelThree-----------------------------------------------------------------------------------------------------
 
                 bool beatLvlTwo = false;
                 bool playLvlTwoAgain = false;
-                string lTwoYesString = "y";
+
 
                 do  //LevelTwo------------------------------------------------------------------------------------------------------- 
                 {
                     bool beatLvlOne = false;
                     bool playLvlOneAgain = false;
-                    string lOneYesString = "y";
+
 
                     do  //LevelOne Easy-------------------------------------------------------------------------------
                     {
@@ -120,7 +120,7 @@ namespace HangManGame
                             Console.WriteLine("GAME OVER");
                             Console.WriteLine("Would you like to play again y/n?");
                             string lOneuserAnswer = Console.ReadLine();
-                            playLvlOneAgain = lOneuserAnswer == lOneYesString;
+                            playLvlOneAgain = lOneuserAnswer == yesString;
                             Console.Clear();
                         }
                     } while (beatLvlOne == false && playLvlOneAgain == true);
@@ -213,7 +213,7 @@ namespace HangManGame
                         Console.WriteLine("GAME OVER");
                         Console.WriteLine("Would you like to play again y/n?");
                         string lTwouserAnswer = Console.ReadLine();
-                        playLvlTwoAgain = lTwouserAnswer == lTwoYesString;
+                        playLvlTwoAgain = lTwouserAnswer == yesString;
                         Console.Clear();
                     }
 
