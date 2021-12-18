@@ -21,19 +21,19 @@ namespace HangManGame
                 bool playLvlThreeAgain = false;
 
 
-                //LevelThree-----------------------------------------------------------------------------------------------------
+                //LevelThree
 
                 bool beatLvlTwo = false;
                 bool playLvlTwoAgain = false;
 
 
-                do  //LevelTwo------------------------------------------------------------------------------------------------------- 
+                do  //LevelTwo 
                 {
                     bool beatLvlOne = false;
                     bool playLvlOneAgain = false;
 
 
-                    do  //LevelOne Easy-------------------------------------------------------------------------------
+                    do  //LevelOne
                     {
 
                         Random rndLvlOne = new Random();
@@ -62,11 +62,11 @@ namespace HangManGame
                         for (int i = 0; i < lvlOneWord.Length; i++)
                         {
                             lvlOneDsply.Add("_");
-                        }
+                        }                       
 
                         while (beatLvlOne == false && lvlOneWrongAttempts <= lvlOneAllowedAttempts)
                         {
-                            Console.WriteLine(lvlOneWord);//for testing only!!!
+                            //Console.WriteLine(lvlOneWord);//for testing only!!!
                             lvlOneRemAttempts = lvlOneAllowedAttempts - lvlOneWrongAttempts;
 
                             Console.WriteLine("  Welcome to Hang Man! Level One \n\n**Easy Difficulty** \n");
@@ -119,7 +119,11 @@ namespace HangManGame
                         {
                             Console.WriteLine("GAME OVER");
                             Console.WriteLine("Would you like to play again y/n?");
-                            string lOneuserAnswer = Console.ReadLine();
+                            string lOneuserAnswer = Console.ReadLine().ToLower();
+                            if (lOneuserAnswer != yesString)
+                            {
+                                System.Environment.Exit(0);
+                            }
                             playLvlOneAgain = lOneuserAnswer == yesString;
                             Console.Clear();
                         }
@@ -158,7 +162,7 @@ namespace HangManGame
 
                     while (beatLvlTwo == false && lvlTwoWrongAttempts <= lvlTwoAllowedAttempts)
                     {
-                        Console.WriteLine(lvlTwoWord);//for testing only!!!
+                        //Console.WriteLine(lvlTwoWord);//for testing only!!!
                         lvlTwoRemAttempts = lvlTwoAllowedAttempts - lvlTwoWrongAttempts;
 
                         Console.WriteLine("  Welcome to Hang Man! Level Two \n\n**Intermediate Difficulty** \n");
@@ -213,6 +217,10 @@ namespace HangManGame
                         Console.WriteLine("GAME OVER");
                         Console.WriteLine("Would you like to play again y/n?");
                         string lTwouserAnswer = Console.ReadLine();
+                        if (lTwouserAnswer != yesString)
+                        {
+                            System.Environment.Exit(0);
+                        }
                         playLvlTwoAgain = lTwouserAnswer == yesString;
                         Console.Clear();
                     }
@@ -251,7 +259,7 @@ namespace HangManGame
 
                 while (beatLvlThree == false && lvlThreeWrongAttempts <= lvlThreeAllowedAttempts)
                 {
-                    Console.WriteLine(lvlThreeWord);//For testing only!!
+                    //Console.WriteLine(lvlThreeWord);//For testing only!!
                     lvlThreeRemAttempts = lvlThreeAllowedAttempts - lvlThreeWrongAttempts;
 
                     Console.WriteLine("  Welcome to Hang Man! Level Three \n\n**Hard Difficulty** \n");
@@ -305,10 +313,35 @@ namespace HangManGame
 
                 Console.WriteLine("Would you like to play again y/n?");
                 string userAnswer = Console.ReadLine();
+                if (userAnswer != yesString)
+                {
+                    System.Environment.Exit(0);
+                }
                 Console.Clear();
 
                 playGameAgain = userAnswer == yesString;
             }
         }
+        static string LetterCheck(string wordCheck, string input, List<string> display) //method to compare input to random word (non Functional)
+        {
+            if (wordCheck.Contains(input))
+            {
+                char chInput = input[0];
+
+                for (int i = 0; i < wordCheck.Length; i++)
+                {
+                    if (wordCheck[i].Equals(chInput))
+                    {
+                        display[i] = input;
+                    }
+                }
+                string correct = Console.WriteLine($"Correct!!");
+                return display + correct;
+
+            }
+        }
+            
+            
+        
     }
 }
