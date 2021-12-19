@@ -17,9 +17,6 @@ namespace HangManGame
 
             while (playGameAgain)
             {
-
-                Random rndLvlOne = new Random();
-
                 string lvlOneWord;
                 string lOneInput;
                 bool beatLvlOne = false;
@@ -36,16 +33,14 @@ namespace HangManGame
                 levelOneWords.Add("spider");
                 levelOneWords.Add("wheelie");
 
-                lvlOneWord = levelOneWords[rndLvlOne.Next(levelOneWords.Count)]; //Randomly selected word from level one list
+                lvlOneWord = GetRndWord(levelOneWords);
 
                 int lvlOneAllowedAttempts = 10;
                 int lvlOneWrongAttempts = 0;
 
-                List<string> lvlOneDsply = new List<string>(lvlOneWord.Length); //hangman blank spaces                
-                for (int i = 0; i < lvlOneWord.Length; i++)
-                {
-                    lvlOneDsply.Add("_");
-                }
+                List<string> lvlOneDsply = GenerateUnderScores(lvlOneWord.Length);
+
+
 
                 while (beatLvlOne == false && lvlOneWrongAttempts <= lvlOneAllowedAttempts)
                 {
@@ -113,24 +108,49 @@ namespace HangManGame
 
             }
         }
-        static string LetterCheck(string wordCheck, string input, List<string> display) //method to compare input to random word (non Functional)
+        //Method that generates underscore display
+
+        static List<string> GenerateUnderScores (int wordLength)
         {
-            if (wordCheck.Contains(input))
+            List<string> underScores = new List<string>(wordLength); //hangman blank spaces                
+            for (int i = 0; i < wordLength; i++)
             {
-                char chInput = input[0];
-
-                for (int i = 0; i < wordCheck.Length; i++)
-                {
-                    if (wordCheck[i].Equals(chInput))
-                    {
-                        display[i] = input;
-                    }
-                }
-                string correct = Console.WriteLine($"Correct!!");
-                return display + correct;
-
+                underScores.Add("_");
             }
+            return underScores;
         }
+
+
+        /// <summary>
+        ///  method that returns a ranom word from a list of words
+        /// </summary>
+        /// <param name="wordList">the list to pick a word from</param>
+        /// <returns>a random word of that list</returns>
+        static string GetRndWord (List<string> wordList)
+        {
+            Random random = new Random();
+            string rndWord = wordList[random.Next(wordList.Count)];
+            return rndWord;
+        }
+
+        //static string LetterCheck(string wordCheck, string input, List<string> display) //method to compare input to random word (non Functional)
+        //{
+        //    if (wordCheck.Contains(input))
+        //    {
+        //        char chInput = input[0];
+
+        //        for (int i = 0; i < wordCheck.Length; i++)
+        //        {
+        //            if (wordCheck[i].Equals(chInput))
+        //            {
+        //                display[i] = input;
+        //            }
+        //        }
+        //        string correct = Console.WriteLine($"Correct!!");
+        //        return display + correct;
+
+        //    }
+        //}
 
 
 
