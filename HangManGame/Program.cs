@@ -11,15 +11,13 @@ namespace HangManGame
             bool playGameAgain = true;
             string yesString = "y";
             int lvlOneRemAttempts = 0;
-            int lvlTwoRemAttempts = 0;
-            int lvlThreeRemAttempts = 0;
             int score = 0;
 
             while (playGameAgain)
             {
-                string lvlOneWord;
-                string lOneInput;
-                bool beatLvlOne = false;
+                string word;
+                string input;
+                bool beatLvl = false;
 
                 List<string> levelOneWords = new List<string>(); //List of words for Easy difficulty              
                 levelOneWords.Add("doritos");
@@ -33,59 +31,50 @@ namespace HangManGame
                 levelOneWords.Add("spider");
                 levelOneWords.Add("wheelie");
 
-                lvlOneWord = GetRndWord(levelOneWords);
+                word = GetRndWord(levelOneWords);
 
                 int lvlOneAllowedAttempts = 10;
                 int lvlOneWrongAttempts = 0;
 
-                List<string> lvlOneDsply = GenerateUnderScores(lvlOneWord.Length);
+                List<string> lvlOneDsply = GenerateUnderScores(word.Length);
 
-
-
-                while (beatLvlOne == false && lvlOneWrongAttempts <= lvlOneAllowedAttempts)
+                while (beatLvl == false && lvlOneWrongAttempts <= lvlOneAllowedAttempts)
                 {
                     //Console.WriteLine(lvlOneWord);//for testing only!!!
                     lvlOneRemAttempts = lvlOneAllowedAttempts - lvlOneWrongAttempts;
 
-                    Console.WriteLine("  Welcome to Hang Man! Level One \n\n**Easy Difficulty** \n");
-                    Console.WriteLine($"Please choose a letter, you have {lvlOneRemAttempts} guesses.\n");
+                    UIMethods.WelcomeMessage(lvlOneRemAttempts);
 
-                    foreach (string letter in lvlOneDsply)//writes letters in display
+                    WriteLetters(lvlOneDsply);
+
+                    input = Console.ReadLine().ToLower();//gets user input                   
+
+                    if (word.Contains(input))//checks if letter is in random word
                     {
-                        Console.Write(letter);
-                    }
-                    Console.WriteLine();
+                        char chlOneInput = input[0];
 
-                    lOneInput = Console.ReadLine().ToLower();//gets user input
-
-                    if (lvlOneWord.Contains(lOneInput))//checks if letter is in random word
-                    {
-                        char chlOneInput = lOneInput[0];
-
-                        for (int i = 0; i < lvlOneWord.Length; i++)//changes _ to input char, if there are no more _ the game is won
+                        for (int i = 0; i < word.Length; i++)//changes _ to input char, if there are no more _ the game is won
                         {
-                            if (lvlOneWord[i].Equals(chlOneInput))
+                            if (word[i].Equals(chlOneInput))
                             {
-                                lvlOneDsply[i] = lOneInput;
+                                lvlOneDsply[i] = input;
                             }
                         }
                         Console.WriteLine($"Correct!!");
                     }
                     if (lvlOneDsply.Contains("_") == false)
                     {
-                        beatLvlOne = true;
+                        beatLvl = true;
                     }
-                    if (lvlOneWord.Contains(lOneInput) == false)
+                    if (word.Contains(input) == false)
                     {
                         lvlOneWrongAttempts++;
                         Console.WriteLine($"Incorrect!");
-                    }
-                    Console.WriteLine("Please press 'Enter' to try again.");
-                    bool enter = Console.ReadKey().Key == ConsoleKey.Enter;
-                    Console.Clear();
+                    }                   
+                    UIMethods.TryAgain();
                 }
 
-                if (beatLvlOne)
+                if (beatLvl)
                 {
                     score = lvlOneRemAttempts;
                     Console.WriteLine($"Congratulations! you beat level one! your score is {score} points");
@@ -108,8 +97,20 @@ namespace HangManGame
 
             }
         }
-        //Method that generates underscore display
-
+        static void WriteLetters (List<string> underscores)
+        {
+            foreach (string letter in underscores)//writes letters in display
+            {
+                Console.Write(letter);
+            }
+            Console.WriteLine();
+        }
+        
+        /// <summary>
+        /// Generates underscores based on the number of letters in the random word
+        /// </summary>
+        /// <param name="wordLength"></param>
+        /// <returns>a list of underscores based on rnd word length</returns>
         static List<string> GenerateUnderScores (int wordLength)
         {
             List<string> underScores = new List<string>(wordLength); //hangman blank spaces                
@@ -133,24 +134,7 @@ namespace HangManGame
             return rndWord;
         }
 
-        //static string LetterCheck(string wordCheck, string input, List<string> display) //method to compare input to random word (non Functional)
-        //{
-        //    if (wordCheck.Contains(input))
-        //    {
-        //        char chInput = input[0];
-
-        //        for (int i = 0; i < wordCheck.Length; i++)
-        //        {
-        //            if (wordCheck[i].Equals(chInput))
-        //            {
-        //                display[i] = input;
-        //            }
-        //        }
-        //        string correct = Console.WriteLine($"Correct!!");
-        //        return display + correct;
-
-        //    }
-        //}
+        
 
 
 
