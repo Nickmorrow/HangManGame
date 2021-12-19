@@ -12,6 +12,7 @@ namespace HangManGame
             string yesString = "y";
             int lvlOneRemAttempts = 0;
             int score = 0;
+            string lvlNum = "one";
 
             while (playGameAgain)
             {
@@ -43,7 +44,7 @@ namespace HangManGame
                     //Console.WriteLine(lvlOneWord);//for testing only!!!
                     lvlOneRemAttempts = lvlOneAllowedAttempts - lvlOneWrongAttempts;
 
-                    UIMethods.WelcomeMessage(lvlOneRemAttempts);
+                    UIMethods.WelcomeMessage(lvlOneRemAttempts, lvlNum);
 
                     WriteLetters(lvlOneDsply);
 
@@ -59,8 +60,8 @@ namespace HangManGame
                             {
                                 lvlOneDsply[i] = input;
                             }
-                        }
-                        Console.WriteLine($"Correct!!");
+                        }                        
+                        UIMethods.Correct();
                     }
                     if (lvlOneDsply.Contains("_") == false)
                     {
@@ -69,34 +70,35 @@ namespace HangManGame
                     if (word.Contains(input) == false)
                     {
                         lvlOneWrongAttempts++;
-                        Console.WriteLine($"Incorrect!");
+                        UIMethods.Incorrect();
                     }                   
                     UIMethods.TryAgain();
                 }
 
                 if (beatLvl)
                 {
-                    score = lvlOneRemAttempts;
-                    Console.WriteLine($"Congratulations! you beat level one! your score is {score} points");
-                    Console.WriteLine("Please press 'Spacebar' continue.");
-                    bool spaceBar = Console.ReadKey().Key == ConsoleKey.Spacebar;
-                    Console.Clear();
+                    score = lvlOneRemAttempts;                   
+                    UIMethods.BeatLvlMessage(lvlNum, score);
                 }
                 else
                 {
-                    Console.WriteLine("GAME OVER");
-                    Console.WriteLine("Would you like to play again y/n?");
-                    string lOneuserAnswer = Console.ReadLine().ToLower();
-                    if (lOneuserAnswer != yesString)
+                    UIMethods.GameOver();
+                    string lOneUserAnswer = Console.ReadLine().ToLower();
+                    if (lOneUserAnswer != yesString)
                     {
                         System.Environment.Exit(0);
                     }
-                    playGameAgain = lOneuserAnswer == yesString;
+                    playGameAgain = lOneUserAnswer == yesString;
                     Console.Clear();
                 }
 
             }
         }
+
+        /// <summary>
+        /// Writes letters in display
+        /// </summary>
+        /// <param name="underscores"></param>
         static void WriteLetters (List<string> underscores)
         {
             foreach (string letter in underscores)//writes letters in display
@@ -104,8 +106,7 @@ namespace HangManGame
                 Console.Write(letter);
             }
             Console.WriteLine();
-        }
-        
+        }       
         /// <summary>
         /// Generates underscores based on the number of letters in the random word
         /// </summary>
@@ -120,8 +121,6 @@ namespace HangManGame
             }
             return underScores;
         }
-
-
         /// <summary>
         ///  method that returns a ranom word from a list of words
         /// </summary>

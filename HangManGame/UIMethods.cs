@@ -13,9 +13,9 @@ namespace HangManGame
         /// Displays welcome message and number of remaining attempts.
         /// </summary>
         /// <param name="remAttempts"></param>
-        public static void WelcomeMessage(int remAttempts)
+        public static void WelcomeMessage(int remAttempts, string level)
         {
-            Console.WriteLine("  Welcome to Hang Man! Level One \n\n**Easy Difficulty** \n");
+            Console.WriteLine($"  Welcome to Hang Man! Level {level} \n\n**Easy Difficulty** \n");
             Console.WriteLine($"Please choose a letter, you have {remAttempts} guesses.\n");
         }
         //public static string GetInput(string input)
@@ -23,11 +23,49 @@ namespace HangManGame
         //    input = Console.ReadLine().ToLower();
         //    return input;
         //}
+        /// <summary>
+        /// Lets the user decide if they want to try again
+        /// </summary>
         public static void TryAgain()
         {
             Console.WriteLine("Please press 'Enter' to try again.");
             bool enter = Console.ReadKey().Key == ConsoleKey.Enter;
             Console.Clear();
+        }
+        /// <summary>
+        /// States that the guess was correct
+        /// </summary>
+        public static void Correct ()
+        {
+            Console.WriteLine($"Correct!!");
+        }
+        /// <summary>
+        /// States that the guess was incorrect
+        /// </summary>
+        public static void Incorrect ()
+        {
+            Console.WriteLine($"Incorrect!");
+        }
+        /// <summary>
+        /// Displays message stating that the user has beaten the level, lets the user decide if they want to play again
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="score"></param>
+        public static void BeatLvlMessage (string level, int score)
+        {
+            Console.WriteLine($"Congratulations! you beat level {level}! your score is {score} points");
+            Console.WriteLine("Please press 'Spacebar' continue.");
+            bool spaceBar = Console.ReadKey().Key == ConsoleKey.Spacebar;
+            Console.Clear();
+        }
+        /// <summary>
+        /// Displays game over message and asks user if they want to play again
+        /// </summary>
+        /// <param name="yesString"></param>
+        public static void GameOver ()
+        {
+            Console.WriteLine("GAME OVER");
+            Console.WriteLine("Would you like to play again y/n?");           
         }
     }
 }
