@@ -10,7 +10,7 @@ namespace HangManGame
         {
             bool playGameAgain = true;
             string yesString = "y";
-            int lvlOneRemAttempts = 0;
+            int remAttempts = 0;
             int score = 0;
             string lvlNum = "one";
 
@@ -20,7 +20,7 @@ namespace HangManGame
                 string input;
                 bool beatLvl = false;
 
-                List<string> levelOneWords = new List<string>(); //List of words for Easy difficulty              
+                List<string> levelOneWords = new List<string>();               
                 levelOneWords.Add("doritos");
                 levelOneWords.Add("bloody");
                 levelOneWords.Add("chair");
@@ -34,42 +34,42 @@ namespace HangManGame
 
                 word = GetRndWord(levelOneWords);
 
-                int lvlOneAllowedAttempts = 10;
-                int lvlOneWrongAttempts = 0;
+                int allowedAttempts = 10;
+                int wrongAttempts = 0;
 
-                List<string> lvlOneDsply = GenerateUnderScores(word.Length);
+                List<string> underScores = GenerateUnderScores(word.Length);
 
-                while (beatLvl == false && lvlOneWrongAttempts <= lvlOneAllowedAttempts)
+                while (beatLvl == false && wrongAttempts <= allowedAttempts)
                 {
                     //Console.WriteLine(lvlOneWord);//for testing only!!!
-                    lvlOneRemAttempts = lvlOneAllowedAttempts - lvlOneWrongAttempts;
+                    remAttempts = allowedAttempts - wrongAttempts;
 
-                    UIMethods.WelcomeMessage(lvlOneRemAttempts, lvlNum);
+                    UIMethods.WelcomeMessage(remAttempts, lvlNum);
 
-                    WriteLetters(lvlOneDsply);
+                    WriteLetters(underScores);
 
-                    input = Console.ReadLine().ToLower();//gets user input                   
+                    input = UIMethods.GetInput();                   
 
                     if (word.Contains(input))//checks if letter is in random word
                     {
-                        char chlOneInput = input[0];
+                        char chInput = input[0];
 
                         for (int i = 0; i < word.Length; i++)//changes _ to input char, if there are no more _ the game is won
                         {
-                            if (word[i].Equals(chlOneInput))
+                            if (word[i].Equals(chInput))
                             {
-                                lvlOneDsply[i] = input;
+                                underScores[i] = input;
                             }
                         }                        
                         UIMethods.Correct();
                     }
-                    if (lvlOneDsply.Contains("_") == false)
+                    if (underScores.Contains("_") == false)
                     {
                         beatLvl = true;
                     }
                     if (word.Contains(input) == false)
                     {
-                        lvlOneWrongAttempts++;
+                        wrongAttempts++;
                         UIMethods.Incorrect();
                     }                   
                     UIMethods.TryAgain();
@@ -77,19 +77,19 @@ namespace HangManGame
 
                 if (beatLvl)
                 {
-                    score = lvlOneRemAttempts;                   
+                    score = remAttempts;                   
                     UIMethods.BeatLvlMessage(lvlNum, score);
                 }
                 else
                 {
                     UIMethods.GameOver();
-                    string lOneUserAnswer = Console.ReadLine().ToLower();
-                    if (lOneUserAnswer != yesString)
+                    string userAnswer = UIMethods.GetInput();
+                    if (userAnswer != yesString)
                     {
                         System.Environment.Exit(0);
                     }
-                    playGameAgain = lOneUserAnswer == yesString;
-                    Console.Clear();
+                    playGameAgain = userAnswer == yesString;
+                    
                 }
 
             }

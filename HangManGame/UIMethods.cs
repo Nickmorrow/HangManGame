@@ -18,11 +18,15 @@ namespace HangManGame
             Console.WriteLine($"  Welcome to Hang Man! Level {level} \n\n**Easy Difficulty** \n");
             Console.WriteLine($"Please choose a letter, you have {remAttempts} guesses.\n");
         }
-        //public static string GetInput(string input)
-        //{
-        //    input = Console.ReadLine().ToLower();
-        //    return input;
-        //}
+        /// <summary>
+        /// Gets user input
+        /// </summary>
+        /// <returns>Returns user input</returns>
+        public static string GetInput()
+        {
+            string input = Console.ReadLine().ToLower();
+            return input;
+        }
         /// <summary>
         /// Lets the user decide if they want to try again
         /// </summary>
