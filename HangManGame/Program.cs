@@ -12,7 +12,7 @@ namespace HangManGame
             string yesString = "y";
             int remAttempts = 0;
             int score = 0;
-            string lvlNum = "one";
+            string lvlOne = "one";
 
             while (playGameAgain)
             {
@@ -44,7 +44,7 @@ namespace HangManGame
                     //Console.WriteLine(lvlOneWord);//for testing only!!!
                     remAttempts = allowedAttempts - wrongAttempts;
 
-                    UIMethods.WelcomeMessage(remAttempts, lvlNum);
+                    UIMethods.WelcomeMessage(remAttempts, lvlOne);
 
                     WriteLetters(underScores);
 
@@ -78,7 +78,7 @@ namespace HangManGame
                 if (beatLvl)
                 {
                     score = remAttempts;                   
-                    UIMethods.BeatLvlMessage(lvlNum, score);
+                    UIMethods.BeatLvlMessage(lvlOne, score);
                 }
                 else
                 {

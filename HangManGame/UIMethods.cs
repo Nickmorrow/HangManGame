@@ -30,11 +30,12 @@ namespace HangManGame
         /// <summary>
         /// Lets the user decide if they want to try again
         /// </summary>
-        public static void TryAgain()
+        public static bool TryAgain()
         {
             Console.WriteLine("Please press 'Enter' to try again.");
-            bool enter = Console.ReadKey().Key == ConsoleKey.Enter;
+            bool enter = Console.ReadKey().Key == ConsoleKey.Enter;         
             Console.Clear();
+            return enter;
         }
         /// <summary>
         /// States that the guess was correct
@@ -55,12 +56,13 @@ namespace HangManGame
         /// </summary>
         /// <param name="level"></param>
         /// <param name="score"></param>
-        public static void BeatLvlMessage (string level, int score)
+        public static bool BeatLvlMessage (string level, int score)
         {
             Console.WriteLine($"Congratulations! you beat level {level}! your score is {score} points");
             Console.WriteLine("Please press 'Spacebar' continue.");
             bool spaceBar = Console.ReadKey().Key == ConsoleKey.Spacebar;
             Console.Clear();
+            return spaceBar;
         }
         /// <summary>
         /// Displays game over message and asks user if they want to play again
