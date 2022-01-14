@@ -13,9 +13,9 @@ namespace HangManGame
         /// Displays welcome message and number of remaining attempts.
         /// </summary>
         /// <param name="remAttempts"></param>
-        public static void WelcomeMessage(int remAttempts, string level)
+        public static void WelcomeMessage(int remAttempts, string level, string difficulty)
         {
-            Console.WriteLine($"  Welcome to Hang Man! Level {level} \n\n**Easy Difficulty** \n");
+            Console.WriteLine($"  Welcome to Hang Man! Level {level} \n\n**{difficulty} Difficulty** \n");
             Console.WriteLine($"Please choose a letter, you have {remAttempts} guesses.\n");
         }
         /// <summary>
@@ -72,6 +72,15 @@ namespace HangManGame
         {
             Console.WriteLine("GAME OVER");
             Console.WriteLine("Would you like to play again y/n?");           
+        }
+        /// <summary>
+        /// Displays winning message and score
+        /// </summary>
+        /// <param name="score"></param>
+        public static void BeatGameMessage(int score)
+        {
+            Console.WriteLine($"Congratulations! you Win!! your score is {score} points");            
+            Console.WriteLine("Would you like to play again y/n?");          
         }
     }
 }

@@ -11,12 +11,19 @@ namespace HangManGame
             bool playGameAgain = true;
             string yesString = "y";
             int remAttempts = 0;
-            int score = 0;
-            string lvlOne = "one";
+            int score = 0;            
+            int lvlsBeaten = 0;
 
             while (playGameAgain)
             {
-                string word;
+                if (lvlsBeaten == 3)
+                {
+                    lvlsBeaten = 0;
+                }
+
+                string level = GetLevel(lvlsBeaten);
+                string difficulty = GetDifficulty(lvlsBeaten);
+                string word = "";
                 string input;
                 bool beatLvl = false;
 
@@ -32,7 +39,42 @@ namespace HangManGame
                 levelOneWords.Add("spider");
                 levelOneWords.Add("wheelie");
 
-                word = GetRndWord(levelOneWords);
+                List<string> levelTwoWords = new List<string>();               
+                levelTwoWords.Add("business");
+                levelTwoWords.Add("elephant");
+                levelTwoWords.Add("sandwich");
+                levelTwoWords.Add("violence");
+                levelTwoWords.Add("november");
+                levelTwoWords.Add("habaneros");
+                levelTwoWords.Add("macadamia");
+                levelTwoWords.Add("abandoned");
+                levelTwoWords.Add("government");
+                levelTwoWords.Add("restaurant");
+
+                List<string> levelThreeWords = new List<string>();               
+                levelThreeWords.Add("acceleration");
+                levelThreeWords.Add("backwoodsman");
+                levelThreeWords.Add("cantankerous");
+                levelThreeWords.Add("decomposable");
+                levelThreeWords.Add("egyptologist");
+                levelThreeWords.Add("malcontented");
+                levelThreeWords.Add("gentrification");
+                levelThreeWords.Add("infrastructure");
+                levelThreeWords.Add("methamphetamine");
+                levelThreeWords.Add("bioluminescence");
+
+                if (lvlsBeaten == 0)
+                {
+                    word = GetRndWord(levelOneWords);
+                }
+                if (lvlsBeaten == 1)
+                {
+                    word = GetRndWord(levelTwoWords);
+                }
+                if (lvlsBeaten == 2)
+                {
+                    word = GetRndWord(levelThreeWords);
+                }
 
                 int allowedAttempts = 10;
                 int wrongAttempts = 0;
@@ -41,10 +83,10 @@ namespace HangManGame
 
                 while (beatLvl == false && wrongAttempts <= allowedAttempts)
                 {
-                    //Console.WriteLine(lvlOneWord);//for testing only!!!
+                    Console.WriteLine(word);//for testing only!!!
                     remAttempts = allowedAttempts - wrongAttempts;
 
-                    UIMethods.WelcomeMessage(remAttempts, lvlOne);
+                    UIMethods.WelcomeMessage(remAttempts, level, difficulty);
 
                     WriteLetters(underScores);
 
@@ -66,6 +108,7 @@ namespace HangManGame
                     if (underScores.Contains("_") == false)
                     {
                         beatLvl = true;
+                        lvlsBeaten++;
                     }
                     if (word.Contains(input) == false)
                     {
@@ -74,11 +117,24 @@ namespace HangManGame
                     }                   
                     UIMethods.TryAgain();
                 }
-
+               
                 if (beatLvl)
                 {
-                    score = remAttempts;                   
-                    UIMethods.BeatLvlMessage(lvlOne, score);
+                    score = remAttempts;
+                    if (lvlsBeaten < 3)
+                    {
+                        UIMethods.BeatLvlMessage(level, score);
+                    }                   
+                    if (lvlsBeaten == 3)
+                    {
+                        UIMethods.BeatGameMessage(score);
+                        string userAnswer = UIMethods.GetInput();
+                        if (userAnswer != yesString)
+                        {
+                            System.Environment.Exit(0);
+                        }
+                    }
+                    Console.Clear();
                 }
                 else
                 {
@@ -122,7 +178,7 @@ namespace HangManGame
             return underScores;
         }
         /// <summary>
-        ///  method that returns a ranom word from a list of words
+        ///  method that returns a random word from a list of words
         /// </summary>
         /// <param name="wordList">the list to pick a word from</param>
         /// <returns>a random word of that list</returns>
@@ -132,8 +188,56 @@ namespace HangManGame
             string rndWord = wordList[random.Next(wordList.Count)];
             return rndWord;
         }
+        /// <summary>
+        /// Changes the level of game
+        /// </summary>
+        /// <param name="lvlsBeaten"></param>
+        /// <returns>Level of game</returns>
+        static string GetLevel (int lvlsBeaten)
+        {
+            string level = "";
 
-        
+            if (lvlsBeaten == 0)
+            {
+                level = "one"; 
+            }
+            if (lvlsBeaten == 1)
+            {
+                level = "two";
+            }
+            if (lvlsBeaten == 2)
+            {
+                level = "three";
+            }
+            return level;
+            
+        }
+        /// <summary>
+        /// Changes the difficulty of game
+        /// </summary>
+        /// <param name="lvlsBeaten"></param>
+        /// <returns>Difficulty of game</returns>
+        static string GetDifficulty(int lvlsBeaten)
+        {
+            string difficulty = "";
+
+            if (lvlsBeaten == 0)
+            {
+                difficulty = "Easy";
+            }
+            if (lvlsBeaten == 1)
+            {
+                difficulty = "Intermediate";
+            }
+            if (lvlsBeaten == 2)
+            {
+                difficulty = "Brutal";
+            }
+            return difficulty;
+
+        }
+
+
 
 
 
