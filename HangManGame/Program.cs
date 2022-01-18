@@ -11,7 +11,10 @@ namespace HangManGame
             bool playGameAgain = true;
             string yesString = "y";
             int remAttempts = 0;
-            int score = 0;            
+            //int firstScore = 0;
+            //int secondScore = 0;
+            //int thirdScore = 0;
+            int score = 0;
             int lvlsBeaten = 0;
 
             while (playGameAgain)
@@ -19,15 +22,16 @@ namespace HangManGame
                 if (lvlsBeaten == 3)
                 {
                     lvlsBeaten = 0;
+                    score = 0;
                 }
-
+                
                 string level = GetLevel(lvlsBeaten);
                 string difficulty = GetDifficulty(lvlsBeaten);
                 string word = "";
                 string input;
                 bool beatLvl = false;
 
-                List<string> levelOneWords = new List<string>();               
+                List<string> levelOneWords = new List<string>();
                 levelOneWords.Add("doritos");
                 levelOneWords.Add("bloody");
                 levelOneWords.Add("chair");
@@ -39,7 +43,7 @@ namespace HangManGame
                 levelOneWords.Add("spider");
                 levelOneWords.Add("wheelie");
 
-                List<string> levelTwoWords = new List<string>();               
+                List<string> levelTwoWords = new List<string>();
                 levelTwoWords.Add("business");
                 levelTwoWords.Add("elephant");
                 levelTwoWords.Add("sandwich");
@@ -51,7 +55,7 @@ namespace HangManGame
                 levelTwoWords.Add("government");
                 levelTwoWords.Add("restaurant");
 
-                List<string> levelThreeWords = new List<string>();               
+                List<string> levelThreeWords = new List<string>();
                 levelThreeWords.Add("acceleration");
                 levelThreeWords.Add("backwoodsman");
                 levelThreeWords.Add("cantankerous");
@@ -90,7 +94,7 @@ namespace HangManGame
 
                     WriteLetters(underScores);
 
-                    input = UIMethods.GetInput();                   
+                    input = UIMethods.GetInput();
 
                     if (word.Contains(input))//checks if letter is in random word
                     {
@@ -100,9 +104,9 @@ namespace HangManGame
                         {
                             if (word[i].Equals(chInput))
                             {
-                                underScores[i] = input;
+                                underScores[i] = Char.ToString(chInput); 
                             }
-                        }                        
+                        }
                         UIMethods.Correct();
                     }
                     if (underScores.Contains("_") == false)
@@ -114,17 +118,35 @@ namespace HangManGame
                     {
                         wrongAttempts++;
                         UIMethods.Incorrect();
-                    }                   
+                    }
                     UIMethods.TryAgain();
+
                 }
-               
+
                 if (beatLvl)
                 {
+                    //if (lvlsBeaten == 1)
+                    //{
+                    //    firstScore = remAttempts;
+                    //    score = firstScore;
+                    //}                  
+                    //if (lvlsBeaten == 2)
+                    //{
+                    //    secondScore = firstScore + remAttempts;
+                    //    score = firstScore + secondScore;
+                    //}
+                    //if (lvlsBeaten == 3)
+                    //{
+                    //    thirdScore = firstScore + secondScore + remAttempts;
+                    //    score = firstScore + secondScore + thirdScore;
+                    //}
+
                     score = remAttempts;
+
                     if (lvlsBeaten < 3)
-                    {
+                    {   
                         UIMethods.BeatLvlMessage(level, score);
-                    }                   
+                    }
                     if (lvlsBeaten == 3)
                     {
                         UIMethods.BeatGameMessage(score);
@@ -144,8 +166,9 @@ namespace HangManGame
                     {
                         System.Environment.Exit(0);
                     }
+                    Console.Clear();
                     playGameAgain = userAnswer == yesString;
-                    
+
                 }
 
             }
@@ -154,21 +177,21 @@ namespace HangManGame
         /// <summary>
         /// Writes letters in display
         /// </summary>
-        /// <param name="underscores"></param>
-        static void WriteLetters (List<string> underscores)
+        /// <param name="underscores">letters to write</param>
+        static void WriteLetters(List<string> underscores)
         {
             foreach (string letter in underscores)//writes letters in display
             {
                 Console.Write(letter);
             }
             Console.WriteLine();
-        }       
+        }
         /// <summary>
         /// Generates underscores based on the number of letters in the random word
         /// </summary>
-        /// <param name="wordLength"></param>
+        /// <param name="wordLength">length of the word</param>
         /// <returns>a list of underscores based on rnd word length</returns>
-        static List<string> GenerateUnderScores (int wordLength)
+        static List<string> GenerateUnderScores(int wordLength)
         {
             List<string> underScores = new List<string>(wordLength); //hangman blank spaces                
             for (int i = 0; i < wordLength; i++)
@@ -182,7 +205,7 @@ namespace HangManGame
         /// </summary>
         /// <param name="wordList">the list to pick a word from</param>
         /// <returns>a random word of that list</returns>
-        static string GetRndWord (List<string> wordList)
+        static string GetRndWord(List<string> wordList)
         {
             Random random = new Random();
             string rndWord = wordList[random.Next(wordList.Count)];
@@ -193,13 +216,13 @@ namespace HangManGame
         /// </summary>
         /// <param name="lvlsBeaten"></param>
         /// <returns>Level of game</returns>
-        static string GetLevel (int lvlsBeaten)
+        static string GetLevel(int lvlsBeaten)
         {
             string level = "";
 
             if (lvlsBeaten == 0)
             {
-                level = "one"; 
+                level = "one";
             }
             if (lvlsBeaten == 1)
             {
@@ -210,7 +233,7 @@ namespace HangManGame
                 level = "three";
             }
             return level;
-            
+
         }
         /// <summary>
         /// Changes the difficulty of game

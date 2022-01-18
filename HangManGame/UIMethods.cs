@@ -24,6 +24,7 @@ namespace HangManGame
         /// <returns>Returns user input</returns>
         public static string GetInput()
         {
+            //do validity check here, if invalid repeat input (probly while loop)
             string input = Console.ReadLine().ToLower();
             return input;
         }
@@ -56,13 +57,12 @@ namespace HangManGame
         /// </summary>
         /// <param name="level"></param>
         /// <param name="score"></param>
-        public static bool BeatLvlMessage (string level, int score)
+        public static void BeatLvlMessage (string level, int score)
         {
             Console.WriteLine($"Congratulations! you beat level {level}! your score is {score} points");
-            Console.WriteLine("Please press 'Spacebar' continue.");
-            bool spaceBar = Console.ReadKey().Key == ConsoleKey.Spacebar;
-            Console.Clear();
-            return spaceBar;
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
+            Console.Clear();           
         }
         /// <summary>
         /// Displays game over message and asks user if they want to play again
