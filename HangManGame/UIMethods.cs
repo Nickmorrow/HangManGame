@@ -82,5 +82,12 @@ namespace HangManGame
             Console.WriteLine($"Congratulations! you Win!! your score is {score} points");            
             Console.WriteLine("Would you like to play again y/n?");          
         }
+        /// <summary>
+        /// Clears console
+        /// </summary>
+        public static void Clear()
+        {
+            Console.Clear ();
+        }
     }
 }

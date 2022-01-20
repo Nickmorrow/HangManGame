@@ -11,9 +11,6 @@ namespace HangManGame
             bool playGameAgain = true;
             string yesString = "y";
             int remAttempts = 0;
-            //int firstScore = 0;
-            //int secondScore = 0;
-            //int thirdScore = 0;
             int score = 0;
             int lvlsBeaten = 0;
 
@@ -125,26 +122,10 @@ namespace HangManGame
 
                 if (beatLvl)
                 {
-                    //if (lvlsBeaten == 1)
-                    //{
-                    //    firstScore = remAttempts;
-                    //    score = firstScore;
-                    //}                  
-                    //if (lvlsBeaten == 2)
-                    //{
-                    //    secondScore = firstScore + remAttempts;
-                    //    score = firstScore + secondScore;
-                    //}
-                    //if (lvlsBeaten == 3)
-                    //{
-                    //    thirdScore = firstScore + secondScore + remAttempts;
-                    //    score = firstScore + secondScore + thirdScore;
-                    //}
-
-                    score = remAttempts;
+                    score = score + remAttempts;
 
                     if (lvlsBeaten < 3)
-                    {   
+                    { 
                         UIMethods.BeatLvlMessage(level, score);
                     }
                     if (lvlsBeaten == 3)
@@ -156,7 +137,7 @@ namespace HangManGame
                             System.Environment.Exit(0);
                         }
                     }
-                    Console.Clear();
+                    UIMethods.Clear();
                 }
                 else
                 {
@@ -166,7 +147,7 @@ namespace HangManGame
                     {
                         System.Environment.Exit(0);
                     }
-                    Console.Clear();
+                    UIMethods.Clear();
                     playGameAgain = userAnswer == yesString;
 
                 }
@@ -259,6 +240,7 @@ namespace HangManGame
             return difficulty;
 
         }
+
 
 
 
