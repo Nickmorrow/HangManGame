@@ -84,7 +84,7 @@ namespace HangManGame
 
                 while (beatLvl == false && wrongAttempts <= allowedAttempts)
                 {
-                    Console.WriteLine(word);//for testing only!!!
+                    //Console.WriteLine(word);//for testing only!!!
                     remAttempts = allowedAttempts - wrongAttempts;
 
                     UIMethods.WelcomeMessage(remAttempts, level, difficulty);
